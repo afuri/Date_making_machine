@@ -16,10 +16,10 @@ class Example(QWidget):
     def initUI(self, desktop_width, desktop_height):
         # Зададим размер и положение нашего виджета,
         
-        window_width = desktop_width // 4
-        window_height = desktop_height // 4
+        window_width = desktop_width // 2
+        window_height = desktop_height // 2
         self.resize(window_width, window_height)
-        x_pos = (desktop_width - window_width) // 3
+        x_pos = (desktop_width - window_width) // 2
         y_pos = (desktop_height - window_height) // 2
         self.move(x_pos, y_pos)
         # А также его заголовок
