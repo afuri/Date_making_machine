@@ -1,7 +1,7 @@
 import sys
 
 # Импортируем из PyQt5.QtWidgets классы для создания приложения и виджета
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QCalendarWidget
 
 
 # Унаследуем наш класс от простейшего графического примитива QWidget
@@ -24,6 +24,22 @@ class Example(QWidget):
         self.move(x_pos, y_pos)
         # А также его заголовок
         self.setWindowTitle('Первая программа')
+        self.show_calendar(window_width, window_height)
+
+    def show_calendar(self, window_width, window_height):
+        # creating a QCalendarWidget object
+        self.calendar = QCalendarWidget(self)
+        calendar_width = window_width // 2
+        calendar_height = window_height // 2
+        # setting geometry to the calender
+        self.calendar.resize(calendar_width, calendar_height)
+        calender_x_pos = (window_width - calendar_width) // 4
+        calender_y_pos = (window_height - calendar_height) // 2
+        self.calendar.move(calender_x_pos, calender_y_pos)
+        # setting style sheet // change the color of calender if you want ..
+        self.calendar.setStyleSheet("background : cyan;")
+        # ensuring paint event
+        self.calendar.repaint()
 
 
 if __name__ == '__main__':
