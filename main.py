@@ -37,7 +37,7 @@ class Example(QWidget):
         calender_y_pos = (window_height - calendar_height) // 2
         self.calendar.move(calender_x_pos, calender_y_pos)
         # setting style sheet // change the color of calender if you want ..
-        self.calendar.setStyleSheet("background : cyan;")
+        # self.calendar.setStyleSheet("background : blue;")
         # ensuring paint event
         self.calendar.repaint()
 
