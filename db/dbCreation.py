@@ -1,6 +1,7 @@
 import sqlite3 as sq
 import datetime as dt
 
+
 class myDB():
     def __init__(self):
         self.con = sq.connect('db/dates.db')
@@ -8,11 +9,12 @@ class myDB():
     def create_table(self):
         with self.con:
             # получаем количество таблиц с нужным нам именем
-            data = self.con.execute("select count(*) from sqlite_master where type='table' and name='dates'")
+            data = self.con.execute(
+                "select count(*) from sqlite_master where type='table' and name='dates'")
             for row in data:
                 # если таких таблиц нет
                 if row[0] == 0:
-                    
+
                     # создаём таблицу для товаров
                     with self.con:
                         self.con.execute("""
@@ -33,11 +35,5 @@ class myDB():
                         """)
                     with self.con:
                         sql = 'INSERT INTO holidays (holiday) values(?)'
-                        data = (dt.date(2023, 1, 1))
+                        data = (dt.date(2023, 1, 1),)
                         self.con.execute(sql, data)
-
-    
-if __name__ == '__main__':
-    ex = myDB()
-    ex.create_table()
-    print('ok')

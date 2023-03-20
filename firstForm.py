@@ -1,4 +1,3 @@
-
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QPushButton, QSpinBox, QLineEdit
 from PyQt5.QtWidgets import QMainWindow, QLabel, QDesktopWidget
@@ -7,19 +6,22 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 from forms.dialogWindow import MyDialog, SimpleDialog
 from db.dbCreation import myDB
 from forms.calendarSomeDates import Calendar
+from forms.calendarDate import CalendarStart, CalendarEnd
 from app.datetotable import get_list_of_holidays
+from datesCreation import get_start_date, get_end_date
 
-class MainForm(QMainWindow):
+
+class FirstForm(QMainWindow):
     def __init__(self):
         super().__init__()
         self.window_width = 800
         self.window_height = 600
-        self.workday = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
+        self.workday = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
         self.filename = ''
-        self.initUI()
         ex = myDB()
         ex.create_table()
-
+        self.initUI()
+       
 
     def initUI(self):
         self.resize(self.window_width, self.window_height)
@@ -27,13 +29,10 @@ class MainForm(QMainWindow):
         self.center()
         self.db_show()
 
-        self.pixmap = QPixmap('assets/pict.png')
-        # Если картинки нет, то QPixmap будет пустым, 
-        # а исключения не будет
+        self.pixmap = QPixmap('images/pict.png')
         self.image = QLabel(self)
         self.image.move(20, 20)
-        self.image.resize(760, 180) 
-        # Отображаем содержимое QPixmap в объекте QLabel
+        self.image.resize(760, 180)
         self.image.setPixmap(self.pixmap)
 
         self.mon = self.create_LabelDay('Понедельник', 30, 350)
@@ -53,16 +52,46 @@ class MainForm(QMainWindow):
 
         self.sut = self.create_LabelDay('Суббота', 260, 430)
         self.SpinBox_sut = self.create_SpinBox(340, 430)
-        
+
         self.label_1 = QLabel(self)
-        self.label_1.setText("---------------------------------------------------------------------------------------")
+        self.label_1.setText(
+            "---------------------------------------------------------------------------------------")
         self.label_1.move(40, 470)
         self.label_1.adjustSize()
 
         self.label_2 = QLabel(self)
-        self.label_2.setText("---------------------------------------------------------------------------------------")
+        self.label_2.setText(
+            "---------------------------------------------------------------------------------------")
         self.label_2.move(40, 310)
         self.label_2.adjustSize()
+
+        self.start_label = QLabel(self)
+        self.start_label.setText("Начальная дата")
+        self.start_label.move(30, 220)
+        self.start_label.adjustSize()
+
+        self.start_date = QLabel(self)
+        self.start_date.setText(str(get_start_date().strftime('%d.%m.%Y')))
+        self.start_date.move(30, 230)
+
+        self.end_label = QLabel(self)
+        self.end_label.setText("Заключительная дата")
+        self.end_label.move(30, 260)
+        self.end_label.adjustSize()
+
+        self.end_date = QLabel(self)
+        self.end_date.setText(str(get_end_date().strftime('%d.%m.%Y')))
+        self.end_date.move(30, 270)
+
+        self.btn_start = QPushButton('Изменить начало', self)
+        self.btn_start.resize(240, 30)
+        self.btn_start.move(200, 220)
+        self.btn_start.clicked.connect(self.update_start_date)
+
+        self.btn_end = QPushButton('Изменить окончание', self)
+        self.btn_end.resize(240, 30)
+        self.btn_end.move(200, 260)
+        self.btn_end.clicked.connect(self.update_end_date)
 
         self.name_label = QLabel(self)
         self.name_label.setText("Имя файла: ")
@@ -78,7 +107,7 @@ class MainForm(QMainWindow):
         self.btn.move(135, 540)
         self.btn.clicked.connect(self.make_file)
 
-        self.btn_2 = QPushButton('Редактировать выходные', self)
+        self.btn_2 = QPushButton('Добавить выходные дни', self)
         self.btn_2.resize(300, 30)
         self.btn_2.move(480, 220)
         self.btn_2.clicked.connect(self.show_dates)
@@ -86,10 +115,10 @@ class MainForm(QMainWindow):
         self.btn_3 = QPushButton('Очистить таблицу', self)
         self.btn_3.resize(300, 30)
         self.btn_3.move(480, 540)
-        self.btn_3.clicked.connect(self.update_date)
+        self.btn_3.clicked.connect(self.clear_table)
 
     def make_file(self):
-        self.workday[0] = self.SpinBox_mon.text()  # Получим текст из поля ввода
+        self.workday[0] = self.SpinBox_mon.text()
         self.workday[1] = self.SpinBox_tue.text()
         self.workday[2] = self.SpinBox_wen.text()
         self.workday[3] = self.SpinBox_thu.text()
@@ -98,7 +127,7 @@ class MainForm(QMainWindow):
         self.filename = self.name_input.text()
         dlg = MyDialog(self.filename, self.workday)
         dlg.exec()
-    
+
     def create_SpinBox(self, x, y):
         self = QSpinBox(self)
         self.move(x, y)
@@ -133,19 +162,19 @@ class MainForm(QMainWindow):
             self.table.setItem(i, 2, item_color)
         self.table.move(460, 270)
         self.table.resize(330, 260)
-        self.table.repaint()
-
 
     def show_dates(self):
         self.calendar = Calendar()
         self.calendar.show()
 
-        
-    def update_date(self):
+    def clear_table(self):
         dlg_2 = SimpleDialog()
         dlg_2.exec()
 
-        
-        
-        
-        
+    def update_start_date(self):
+        self.calendar = CalendarStart()
+        self.calendar.show()
+
+    def update_end_date(self):
+        self.calendar = CalendarEnd()
+        self.calendar.show()

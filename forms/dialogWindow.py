@@ -2,7 +2,8 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QLabel
 
 from app.toexcel import write_to_excel
 from app.worklist import WorkDays
-from app.makeDates import clear_holidays
+from datesCreation import clear_holidays
+
 
 class MyDialog(QDialog):
     def __init__(self, filename, workday):
@@ -21,7 +22,8 @@ class MyDialog(QDialog):
         self.layout = QVBoxLayout()
         if self.filename == '':
             self.filename = 'Default'
-        message = QLabel(f"В текущей папке будет создан файл {self.filename}.xlsx с датами Ваших уроков. Подтвердить?")
+        message = QLabel(
+            f"В текущей папке будет создан файл {self.filename}.xlsx с датами Ваших уроков. Подтвердить?")
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
@@ -30,6 +32,7 @@ class MyDialog(QDialog):
         workdays = WorkDays()
         write_to_excel(workdays.get_workdays_list(self.workday), self.filename)
         self.close()
+
 
 class SimpleDialog(QDialog):
     def __init__(self):

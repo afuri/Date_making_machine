@@ -1,9 +1,8 @@
 import datetime as dt
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QDesktopWidget
 
-from makeDates import set_holidays
+from datesCreation import set_holidays
 from forms.myCalendar import MyCalendar
-
 
 
 class Calendar(QWidget):
@@ -30,7 +29,7 @@ class Calendar(QWidget):
         self.selected_dates = set()
 
     def select_range(self):
-        self.selected_dates.add(self.calendar.start_date) 
+        self.selected_dates.add(self.calendar.start_date)
         while self.calendar.start_date != self.calendar.finish_date:
             self.calendar.start_date += dt.timedelta(days=1)
             self.selected_dates.add(self.calendar.start_date)

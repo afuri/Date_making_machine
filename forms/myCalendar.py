@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QCalendarWidget
 import datetime as dt
 
+
 class MyCalendar(QCalendarWidget):
     def __init__(self):
         super().__init__()
@@ -12,8 +13,10 @@ class MyCalendar(QCalendarWidget):
         self.finish_date = None
 
         self.highlight_format = QTextCharFormat()
-        self.highlight_format.setBackground(self.palette().brush(QPalette.Highlight))
-        self.highlight_format.setForeground(self.palette().color(QPalette.HighlightedText))
+        self.highlight_format.setBackground(
+            self.palette().brush(QPalette.Highlight))
+        self.highlight_format.setForeground(
+            self.palette().color(QPalette.HighlightedText))
         self.clicked.connect(self.date_is_clicked)
 
     def format_range(self, format):
@@ -31,8 +34,14 @@ class MyCalendar(QCalendarWidget):
             self.end_date = date
             # set highilighting of currently selected date range
             self.format_range(self.highlight_format)
-            self.start_date = dt.date(self.begin_date.year(), self.begin_date.month(), self.begin_date.day())
-            self.finish_date = dt.date(self.end_date.year(), self.end_date.month(), self.end_date.day())
+            self.start_date = dt.date(self.begin_date.year(
+            ), self.begin_date.month(), self.begin_date.day())
+            self.finish_date = dt.date(self.end_date.year(
+            ), self.end_date.month(), self.end_date.day())
         else:
             self.begin_date = date
             self.end_date = None
+            self.start_date = dt.date(self.begin_date.year(
+            ), self.begin_date.month(), self.begin_date.day())
+            self.finish_date = dt.date(self.begin_date.year(
+            ), self.begin_date.month(), self.begin_date.day())
