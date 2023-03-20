@@ -55,13 +55,13 @@ class FirstForm(QMainWindow):
 
         self.label_1 = QLabel(self)
         self.label_1.setText(
-            "---------------------------------------------------------------------------------------")
+            "----------------------------------------------------------------------")
         self.label_1.move(40, 470)
         self.label_1.adjustSize()
 
         self.label_2 = QLabel(self)
         self.label_2.setText(
-            "---------------------------------------------------------------------------------------")
+            "----------------------------------------------------------------------")
         self.label_2.move(40, 310)
         self.label_2.adjustSize()
 
@@ -152,6 +152,9 @@ class FirstForm(QMainWindow):
         self.table = QTableWidget(self)
         self.table.setRowCount(len(holidays))
         self.table.setColumnCount(3)
+        self.table.setColumnWidth(0, 90)
+        self.table.setColumnWidth(1, 90)
+        self.table.setColumnWidth(2, 90)
         self.table.setHorizontalHeaderLabels(["День", 'Месяц', 'Год'])
         for i, value in enumerate(holidays):
             item_name = QTableWidgetItem(value[0])

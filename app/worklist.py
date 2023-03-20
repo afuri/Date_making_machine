@@ -16,7 +16,7 @@ class WorkDays():
                     'Среда', 'Четверг', 'Пятница', 'Суббота']
         self.start_date -= delta_time1
         while self.start_date != self.date_end:
-            self.start_date += delta_time2
+            self.start_date += delta_time1
             con_1 = self.start_date.weekday() in workdays.keys()
             con_2 = self.start_date not in self.holidays
             if con_1 and con_2:

@@ -1,2 +1,2 @@
-PyQT5 5.15.9
-Xlsxwriter 3.0.9
+PyQT5
+xlsxwriter
