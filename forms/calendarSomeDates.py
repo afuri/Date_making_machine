@@ -30,9 +30,10 @@ class Calendar(QWidget):
 
     def select_range(self):
         self.selected_dates.add(self.calendar.start_date)
-        while self.calendar.start_date != self.calendar.finish_date:
-            self.calendar.start_date += dt.timedelta(days=1)
-            self.selected_dates.add(self.calendar.start_date)
+        if self.calendar.start_date < self.calendar.finish_date:
+            while self.calendar.start_date != self.calendar.finish_date:
+                self.calendar.start_date += dt.timedelta(days=1)
+                self.selected_dates.add(self.calendar.start_date)
         set_holidays(self.selected_dates)
         self.close()
 
