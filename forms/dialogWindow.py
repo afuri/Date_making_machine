@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QLabel
 
 from app.toexcel import write_to_excel
-from app.worklist import get_workdays_list
-
+from app.worklist import WorkDays
+from app.makeDates import clear_holidays
 
 class MyDialog(QDialog):
     def __init__(self, filename, workday):
@@ -27,5 +27,28 @@ class MyDialog(QDialog):
         self.setLayout(self.layout)
 
     def accept(self) -> None:
-        write_to_excel(get_workdays_list(self.workday), self.filename)
+        workdays = WorkDays()
+        write_to_excel(workdays.get_workdays_list(self.workday), self.filename)
+        self.close()
+
+class SimpleDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Внимание!")
+
+        QBtn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+
+        self.layout = QVBoxLayout()
+        message = QLabel(f"Удаляем все выходные. Вы уверены?")
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
+
+    def accept(self) -> None:
+        clear_holidays()
         self.close()
