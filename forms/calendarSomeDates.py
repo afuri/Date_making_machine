@@ -1,15 +1,16 @@
 import datetime as dt
-from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QDesktopWidget
 
-
+from makeDates import set_holidays
 from forms.myCalendar import MyCalendar
+
 
 
 class Calendar(QWidget):
 
     def __init__(self):
         super().__init__()
-
+        self.center()
         # Create a calendar widget
         self.calendar = MyCalendar()
         self.calendar.setGeometry(50, 50, 200, 200)
@@ -33,4 +34,11 @@ class Calendar(QWidget):
         while self.calendar.start_date != self.calendar.finish_date:
             self.calendar.start_date += dt.timedelta(days=1)
             self.selected_dates.add(self.calendar.start_date)
+        set_holidays(self.selected_dates)
+        self.close()
 
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
