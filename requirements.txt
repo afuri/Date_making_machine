@@ -1,0 +1,2 @@
+PyQT5==5.15.9
+xlsxwriter==3.0.9
