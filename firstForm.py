@@ -25,11 +25,11 @@ class FirstForm(QMainWindow):
 
     def initUI(self):
         self.resize(self.window_width, self.window_height)
-        self.setWindowTitle('Даты для КТП')
+        self.setWindowTitle('Даты для КТП в excel')
         self.center()
         self.db_show()
 
-        self.pixmap = QPixmap('images/pict.png')
+        self.pixmap = QPixmap('images/main_img.png')
         self.image = QLabel(self)
         self.image.move(20, 20)
         self.image.resize(760, 180)
